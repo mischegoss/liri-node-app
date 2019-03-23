@@ -1,5 +1,5 @@
 require("dotenv").config();
-var spotify = new Spotify(keys.spotify);
+/*var spotify = new Spotify(keys.spotify);*/
 
 /* This is the initial prompt to direct to which API */
 var inquirer = require('inquirer');
@@ -21,14 +21,21 @@ var askFirstPrompt = function() {
   .then(function(answers) {
     var response = answers.apiPicker
     switch(response) {
-      case 'choice1':
+      case 'concert-this':
         console.log ('You picked one')
         break;
-      case 'choice2':
+      case 'spotify-this-song':
+        console.log ('You picked two')
+        break;
+        case 'movie-this':
+        console.log ('You picked two')
+        break;
+        case 'do-what-it-says':
         console.log ('You picked two')
         break;
       default:
-        // code block
+        console.log("Ugh, oh! How did we get here????")
+        break;
     }
   }
   );
