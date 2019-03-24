@@ -5,22 +5,22 @@ var spotify = new Spotify({
     secret: 'b7cd943cf1f549198daf3d9abc352546'
   });
 
-var inquirer = require('fs');
+
 
 /* This is the initial prompt to direct to which API */
 var inquirer = require('inquirer');
 
-var askFirstPrompt = function() {
+function askFirstPrompt() {
   inquirer.prompt ([
     {
       type: 'list',
       name: 'apiPicker',
       message: 'What would you like to do?',
-      choices: ['concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says'],
+      choices: ['concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says']/*,
       filter: function(val) {
         return val.toLowerCase();
       }
-      
+      */
     }
   ])
 
@@ -60,17 +60,62 @@ function spotifyAction() {
           }
     ])
     .then(function(answers) {
-        var mytrack = answers.spot_song
+        var mytrack = answers.spot_song.trim();
+        var tracklength = mytrack.length
         console.log(mytrack)
         spotify.search({ type: 'track', query: mytrack}, function(err, data) {
             if (err) {
                 return console.log('Error occurred: ' + err);
             } 
+            var pickedsong = data.tracks.items[0].name
+            var pickedsonglower = pickedsong.toLowerCase();
+            var pickedsonglowersub = pickedsonglower.substring(0, tracklength)
+            console.log(pickedsonglowersub)
+            
+            if (mytrack !== pickedsonglowersub) {
+                console.log("Uh oh, looks like that didn't match");
+                tryAgainSpot()
+
+
+            } else {
             console.log("Artist: " + data.tracks.items[0].artists[0].name + "\nSong name: " + data.tracks.items[0].name +
             "\nAlbum Name: " + data.tracks.items[0].album.name + "\nPreview Link: " + data.tracks.items[0].preview_url); 
-            
+            }  
         });
 
     })
 }
+
+function tryAgainSpot() {
+  
+        inquirer.prompt ([
+          {
+            type: 'list',
+            name: 'tryagain',
+            message: 'Would you like to try again?',
+            choices: ['yes', 'no', 'Just give me any song, already!']
+          }
+        ])
+      
+        .then(function(answers) {
+          var tryagainresponse = answers.tryagain
+          switch(tryagainresponse) {
+            case 'yes':
+            spotifyAction();
+              break;
+            case 'no':
+              console.log ('Bye, then!')
+              break;
+              case 'Just give me any song, already!':
+              console.log ('Here\'s your random song')
+              break;
+            default:
+              console.log("Ugh, oh! How did we get here????")
+              break;
+          }
+        }
+        );
+      }
+
+
 askFirstPrompt();
