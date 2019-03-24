@@ -1,3 +1,6 @@
+/* The Special Counsel Report came at the wrong time. This is still a work-in-progress */
+
+
 require("dotenv").config();
 var Spotify = require('node-spotify-api');
 var spotify = new Spotify({
@@ -72,8 +75,8 @@ function spotifyAction() {
             var pickedsonglowersub = pickedsonglower.substring(0, tracklength)
             console.log(pickedsonglowersub)
             
-            if (mytrack !== pickedsonglowersub) {
-                console.log("Uh oh, looks like that didn't match");
+            if ((mytrack !== pickedsonglowersub) || pickedsong == undefined)  {
+                console.log("Uh oh, looks like that didn't quite work");
                 tryAgainSpot()
 
 
