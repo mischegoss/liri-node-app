@@ -1,4 +1,9 @@
-/* The Special Counsel Report came at the wrong time. This is still a work-in-progress */
+/* The Special Counsel Report came at the wrong time. This is not done
+ * TO DO: Code Concert-This, Movie-This and Do What It Says
+ * Use envelope properly.
+ * Add txt file and bonus.
+ * Add ReadME
+ * Working as fast as I can to get this done. But meanwhile, my Spotify works! */
 
 
 require("dotenv").config();
@@ -19,7 +24,7 @@ function askFirstPrompt() {
       type: 'list',
       name: 'apiPicker',
       message: 'What would you like to do?',
-      choices: ['concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says']/*,
+      choices: ['concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says', 'exit']/*,
       filter: function(val) {
         return val.toLowerCase();
       }
@@ -42,6 +47,9 @@ function askFirstPrompt() {
         break;
         case 'do-what-it-says':
         console.log ('You picked two')
+        break;
+        case 'exit':
+        console.log ('Bye!')
         break;
       default:
         console.log("Ugh, oh! How did we get here????")
@@ -83,6 +91,7 @@ function spotifyAction() {
             } else {
             console.log("Artist: " + data.tracks.items[0].artists[0].name + "\nSong name: " + data.tracks.items[0].name +
             "\nAlbum Name: " + data.tracks.items[0].album.name + "\nPreview Link: " + data.tracks.items[0].preview_url); 
+            askFirstPrompt();
             }  
         });
 
@@ -110,7 +119,8 @@ function tryAgainSpot() {
               console.log ('Bye, then!')
               break;
               case 'Just give me any song, already!':
-              console.log ('Here\'s your random song')
+              console.log ('Here\'s your song')
+              playRandomSong()
               break;
             default:
               console.log("Ugh, oh! How did we get here????")
@@ -120,5 +130,17 @@ function tryAgainSpot() {
         );
       }
 
+function playRandomSong() {
+
+spotify.search({ type: 'track', query: 'ace+of+base+sign' + '&limit=1&'},  function(err, data) {
+    if (err) {
+      return console.log('Error occurred: ' + err);
+    }
+   
+    console.log("Artist: " + data.tracks.items[0].artists[0].name + "\nSong name: " + data.tracks.items[0].name +
+    "\nAlbum Name: " + data.tracks.items[0].album.name + "\nPreview Link: " + data.tracks.items[0].preview_url); 
+    askFirstPrompt();
+  });
+}
 
 askFirstPrompt();
