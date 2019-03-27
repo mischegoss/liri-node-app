@@ -3,7 +3,8 @@
  * Use envelope properly.
  * Add txt file and bonus.
  * Add ReadME
- * Working as fast as I can to get this done. But meanwhile, my Spotify works! */
+ * Working as fast as I can to get this done. But meanwhile, my Spotify works!
+ * Will be done by Wednesday evening. Sorry for the delay! Darn Mueller! */
 
 
 require("dotenv").config();
@@ -43,7 +44,7 @@ function askFirstPrompt() {
         spotifyAction();
         break;
         case 'movie-this':
-        console.log ('You picked two')
+       movieThis();
         break;
         case 'do-what-it-says':
         console.log ('You picked two')
@@ -59,6 +60,12 @@ function askFirstPrompt() {
   );
 }
 
+/* Start Movie-This */
+
+
+
+
+/* Start Spotify */
 function spotifyAction() {
     inquirer.prompt ([
         {
@@ -142,5 +149,5 @@ spotify.search({ type: 'track', query: 'ace+of+base+sign' + '&limit=1&'},  funct
     askFirstPrompt();
   });
 }
-
-askFirstPrompt();
+/* End Spotify */
+askFirstPrompt()
