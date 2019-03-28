@@ -1,14 +1,16 @@
-/* The Special Counsel Report came at the wrong time. This is not done
- * TO DO: Code Concert-This, Movie-This and Do What It Says
- * Use envelope properly.
- * Add txt file and bonus.
- * Add ReadME
- * Working as fast as I can to get this done. But meanwhile, my Spotify works!
- * WORKING  RIGHT NOW TO  GET IT DONE Sorry for the delay! Darn Mueller! */
+/* This is not complete! I have been working overtime and work and had hell week but  I wanted to turn something in to show it is a 
+   work in progress. 
+ * I am working hard to complete. Right now spotify  and concert-this are coded, I still
+ * have to code the other options and give each option its own file. */
+
+ /* TO DO: Finish coding other options. Clean up code by giving each option its own .js file. Write to-do list showing completed options.
+   Get rid of visible Spotify code by using envelope */
+  
 
 
 require("dotenv").config();
 var Spotify = require('node-spotify-api');
+var moment = require('moment');
 var spotify = new Spotify({
     id: '88a18c33735646268279b54130d7cc64',
     secret: 'b7cd943cf1f549198daf3d9abc352546'
@@ -37,7 +39,8 @@ function askFirstPrompt() {
     var response = answers.apiPicker
     switch(response) {
       case 'concert-this':
-        console.log ('You picked one')
+        console.log ('Let\'s Find Your Concert')
+        concertThisAction();
         break;
       case 'spotify-this-song':
         console.log ('Let\'s Find Your Song')
@@ -60,7 +63,44 @@ function askFirstPrompt() {
   );
 }
 
-/* Start Movie-This */
+/* Start Concert This */
+
+function concertThisAction() {
+
+  inquirer.prompt([
+    { type: 'input', name: 'artistname', message: 'What artist are you looking for?', filter: function(val) {
+      return val.toLowerCase();
+    }
+  }
+])
+.then(function(answers) {
+  var concertanswer = answers.artistname
+  var concertanswertrimmed = concertanswer.trim();
+  console.log(concertanswertrimmed)
+
+  var queryURL = "https://rest.bandsintown.com/artists/" + concertanswer + "/events?app_id=codingbootcamp";
+
+    request(queryURL, function (error, body) {
+        if (error) console.log(error);
+        var result  =  JSON.parse(body)[0];
+        console.log("Venue name " + result.venue.name);
+        console.log("Venue location " + result.venue.city);
+        console.log("Date of Event " +  moment(result.datetime).format("MM/DD/YYYY")); 
+       
+
+
+    })
+
+ 
+
+})
+
+};
+
+
+
+
+
 
 
 
