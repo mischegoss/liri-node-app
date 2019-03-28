@@ -1,9 +1,10 @@
 /* This is not complete! I have been working overtime and work and had hell week but  I wanted to turn something in to show it is a 
    work in progress. 
- * I am working hard to complete. Right now spotify  and concert-this are coded, I still
+ * I am working hard to complete, please show mercy!  Right now spotify, concert-this and Do This are coded, I still
  * have to code the other options and give each option its own file. */
 
- /* TO DO: Finish coding other options. Clean up code by giving each option its own .js file. Write to-do list showing completed options.
+ /* TO DO: Finish coding other options. Clean up code by giving each option its own .js file. Repackage the spotify grab so that it
+    can be used with our without Inquirer.   Write README list showing completed options.
    Get rid of visible Spotify code by using envelope */
   
 
