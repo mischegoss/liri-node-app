@@ -17,12 +17,7 @@
    var Spotify = require("node-spotify-api");
    var moment = require("moment");
    
-  /* var spotify = new Spotify(keys.spotify);*/
-var spotify = new Spotify({
-    id: '88a18c33735646268279b54130d7cc64',
-    secret: 'b7cd943cf1f549198daf3d9abc352546'
-  });
-
+   var spotify = new Spotify(keys.spotify);
 
 
 /* This is the initial prompt to direct to which API */
@@ -34,11 +29,7 @@ function askFirstPrompt() {
       type: 'list',
       name: 'apiPicker',
       message: 'What would you like to do?',
-      choices: ['concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says', 'exit']/*,
-      filter: function(val) {
-        return val.toLowerCase();
-      }
-      */
+      choices: ['concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says', 'exit']
     }
   ])
 
@@ -126,7 +117,7 @@ function saysHelper(command, term) {
           break;
       case "spotify-this-song":
 
-      /* Need to fix this so it uses term, not goes to inquirer */ 
+      /* Need to fix this so it uses term, right now it goes to inquirer */ 
             let mytrack = term;
             spotifyAction(term);
           break;
