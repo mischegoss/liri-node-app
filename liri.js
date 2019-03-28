@@ -8,9 +8,15 @@
   
 
 
-require("dotenv").config();
-var Spotify = require('node-spotify-api');
-var moment = require('moment');
+   require("dotenv").config();
+
+   var keys = require("./keys");
+   var request = require("request");
+   var fs = require("fs");
+   var Spotify = require("node-spotify-api");
+   var moment = require("moment");
+   
+  /* var spotify = new Spotify(keys.spotify);*/
 var spotify = new Spotify({
     id: '88a18c33735646268279b54130d7cc64',
     secret: 'b7cd943cf1f549198daf3d9abc352546'
@@ -50,7 +56,8 @@ function askFirstPrompt() {
        movieThis();
         break;
         case 'do-what-it-says':
-        console.log ('You picked two')
+        console.log ('Sure Thing');
+        dowhatitSays();
         break;
         case 'exit':
         console.log ('Bye!')
@@ -98,8 +105,40 @@ function concertThisAction() {
 };
 
 
+/*Start Do What It Says */
 
+function dowhatitSays() {
+  fs.readFile("random.txt", "utf8", function (err, data) {
+      if (err) throw err;
 
+      var command = data.split(",")[0];
+      var term = data.split(",")[1];
+
+      saysHelper(command, term);
+  });
+};
+
+function saysHelper(command, term) {
+  switch (command) {
+      case "concert-this":
+           console.log("Got there")
+          break;
+      case "spotify-this-song":
+
+      /* Need to fix this so it uses term, not goes to inquirer */ 
+            let mytrack = term;
+            spotifyAction(term);
+          break;
+      case "movie-this":
+          Movie(term);
+          break;
+      case "do-what-it-says":
+          dowhatitSays();
+          break;
+  }
+}
+
+/* This has unused options, right now! */ 
 
 
 
