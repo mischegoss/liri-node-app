@@ -4,7 +4,7 @@
  * Add txt file and bonus.
  * Add ReadME
  * Working as fast as I can to get this done. But meanwhile, my Spotify works!
- * Will be done by Wednesday evening. Sorry for the delay! Darn Mueller! */
+ * WORKING  RIGHT NOW TO  GET IT DONE Sorry for the delay! Darn Mueller! */
 
 
 require("dotenv").config();
