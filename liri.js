@@ -67,9 +67,9 @@ function askFirstPrompt() {
 function concertThisAction() {
 
   inquirer.prompt([
-    { type: 'input', name: 'artistname', message: 'What artist are you looking for?', filter: function(val) {
-      return val.toLowerCase();
-    }
+    { type: 'input', name: 'artistname', message: 'What artist are you looking for?',/*, filter: function(val) {
+      return val.toLowerCase(); 
+    }*/
   }
 ])
 .then(function(answers) {
@@ -77,24 +77,26 @@ function concertThisAction() {
   var concertanswertrimmed = concertanswer.trim();
   console.log(concertanswertrimmed)
 
-  var queryURL = "https://rest.bandsintown.com/artists/" + concertanswer + "/events?app_id=codingbootcamp";
+  var queryUrl = "https://rest.bandsintown.com/artists/" + concertanswertrimmed + "/events?app_id=codingbootcamp";
+  request(queryUrl, function(error, response, body) {
+  // If the request is successful
+  if (!error && response.statusCode === 200) {
+      var concerts = JSON.parse(body);
+      console.log(concerts);
+      /* TO DO: Format console.log */
 
-    request(queryURL, function (error, body) {
-        if (error) console.log(error);
-        var result  =  JSON.parse(body)[0];
-        console.log("Venue name " + result.venue.name);
-        console.log("Venue location " + result.venue.city);
-        console.log("Date of Event " +  moment(result.datetime).format("MM/DD/YYYY")); 
-       
-
-
-    })
-
+  
+  } else{
+    console.log('Error occurred.');
+  }
+})
  
 
 })
 
 };
+
+
 
 
 /*Start Do What It Says */
@@ -115,11 +117,18 @@ function saysHelper(command, term) {
       case "concert-this":
            console.log("Got there")
           break;
-      case "spotify-this-song":
-
-      /* Need to fix this so it uses term, right now it goes to inquirer */ 
-            let mytrack = term;
-            spotifyAction(term);
+      case "spotify-this-song":  
+        console.log(term)
+        spotify.search({ type: 'track', query: term + '&limit=1&'},  function(err, data) {
+          if (err) {
+            return console.log('Error occurred: ' + err);
+          }
+         
+          console.log("Artist: " + data.tracks.items[0].artists[0].name + "\nSong name: " + data.tracks.items[0].name +
+          "\nAlbum Name: " + data.tracks.items[0].album.name + "\nPreview Link: " + data.tracks.items[0].preview_url); 
+          askFirstPrompt();
+        });
+        
           break;
       case "movie-this":
           Movie(term);
