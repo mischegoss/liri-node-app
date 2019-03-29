@@ -13,6 +13,7 @@
    var moment = require("moment");
    var axios = require("axios");
    var spotify = new Spotify(keys.spotify);
+   var fs = require("fs");
 
 
 /* This is the initial prompt to direct to which API */
