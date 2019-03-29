@@ -103,6 +103,7 @@ function movieThisAction() {
             response.data.Ratings[1].Value
         );
       });
+      askFirstPrompt();
     });
 }
 
@@ -134,9 +135,9 @@ function concertThisAction() {
 
         if (!error && response.statusCode === 200) {
           JSON.parse(body).forEach(function(element) {
-            console.log("Venue name - " + element.venue.name);
+            console.log("Venue name: " + element.venue.name);
             console.log(
-              "Venue Location - " +
+              "Venue Location: " +
                 element.venue.city +
                 " , " +
                 element.venue.region +
@@ -147,6 +148,7 @@ function concertThisAction() {
               "Date - " + moment(element.datetime).format("MM/DD/YYYY")
             );
           });
+          askFirstPrompt();
         }
       });
     });
