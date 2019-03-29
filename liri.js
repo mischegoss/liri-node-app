@@ -85,10 +85,13 @@ function movieThisAction (){
       + "\nCountry: " + response.data.Country + "\nLanguage: " + response.data.Language +"\nPlot: " + response.data.Plot + "\nActors: " +
       response.data.Actors + "\nRotton Tomatoes Rating: " + response.data.Ratings[1].Value );
       
-    
+  
     })
   
+
 })
+
+
 }
 
 
@@ -123,7 +126,11 @@ function concertThisAction() {
             element.venue.country
         );
         console.log("Date - " + moment(element.datetime).format("MM/DD/YYYY"));
+
+   
       });
+
+    
     }
   });
  
