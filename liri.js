@@ -77,7 +77,6 @@ function movieThisAction() {
     .then(function(answers) {
       var movieanswer = answers.moviename;
       var movieanswertrimmed = movieanswer.trim();
-      console.log(movieanswertrimmed);
 
       var queryUrl =
         "http://www.omdbapi.com/?t=" +
@@ -124,7 +123,7 @@ function concertThisAction() {
     .then(function(answers) {
       var concertanswer = answers.artistname;
       var concertanswertrimmed = concertanswer.trim();
-      console.log(concertanswertrimmed);
+      
 
       var queryUrl =
         "https://rest.bandsintown.com/artists/" +
@@ -222,7 +221,7 @@ function spotifyAction() {
     .then(function(answers) {
       var mytrack = answers.spot_song.trim();
       var tracklength = mytrack.length;
-      console.log(mytrack);
+    
       spotify.search({ type: "track", query: mytrack }, function(err, data) {
         if (err) {
           return console.log("Error occurred: " + err);
@@ -230,7 +229,7 @@ function spotifyAction() {
         var pickedsong = data.tracks.items[0].name;
         var pickedsonglower = pickedsong.toLowerCase();
         var pickedsonglowersub = pickedsonglower.substring(0, tracklength);
-        console.log(pickedsonglowersub);
+        
 
         if (mytrack !== pickedsonglowersub || pickedsong == undefined) {
           console.log("Uh oh, looks like that didn't quite work");

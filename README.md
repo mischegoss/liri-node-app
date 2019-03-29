@@ -7,4 +7,4 @@ Node-Spotify-API, Axios, Inquirer, FS, Moment, DotEnv. The node app draws data f
 
 ## This is a command line app
 
-A video of the working app in action can be seen [here](https://youtu.be/NGXfx7wt2as)
+A video of the working app in action can be seen [here](https://youtu.be/0CLkrbdb4Lo)
