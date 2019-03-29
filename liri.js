@@ -1,10 +1,6 @@
-/* This is not complete! I have been working overtime and work and had hell week at work but  I wanted to turn something in to show it is a 
-   work in progress. 
- *  Right now spotify, concert-this and Do This are coded, I still
- * have to code the other options and give each option its own file. */
+/* Basic Functionality Complete but still work  to do! */
 
- /* TO DO: Finish coding other options. Clean up code by giving each option its own .js file. Repackage the spotify grab so that it
-    can be used with our without Inquirer.   Write README list showing completed options. */
+ /* TO DO: Clean up code by giving each option its own .js file. DRY up  code. Write README list showing completed options. */
    
   
 
@@ -13,10 +9,9 @@
 
    var keys = require("./keys");
    var request = require("request");
-   var fs = require("fs");
    var Spotify = require("node-spotify-api");
    var moment = require("moment");
-   
+   var axios = require("axios");
    var spotify = new Spotify(keys.spotify);
 
 
@@ -45,7 +40,7 @@ function askFirstPrompt() {
         spotifyAction();
         break;
         case 'movie-this':
-       movieThis();
+       movieThisAction();
         break;
         case 'do-what-it-says':
         console.log ('Sure Thing...Here ya\' go');
@@ -62,14 +57,48 @@ function askFirstPrompt() {
   );
 }
 
+/* Start Movie This */
+
+function movieThisAction (){
+  
+  inquirer.prompt([
+    { type: 'input', name: 'moviename', message: 'What movie are you looking for?', filter: function(val) {
+      return val.toLowerCase(); 
+    }
+  }
+])
+.then(function(answers) {
+
+  var movieanswer = answers.moviename;
+  var movieanswertrimmed = movieanswer.trim();
+  console.log(movieanswertrimmed);
+
+  var queryUrl =
+    "http://www.omdbapi.com/?t=" + movieanswertrimmed + "&y=&plot=full&tomatoes=true&apikey=trilogy";
+
+  axios.get(queryUrl).then(
+    function(response) {
+    
+
+      console.log("\nTitle: " + response.data.Title + "\nYear: " + response.data.Year + "\nIMDB Rating: " + response.data.imdbRating
+      + "\nCountry: " + response.data.Country + "\nLanguage: " + response.data.Language +"\nPlot: " + response.data.Plot + "\nActors: " +
+      response.data.Actors + "\nRotton Tomatoes Rating: " + response.data.Ratings[1].Value );
+      
+    
+    })
+  
+})
+}
+
+
 /* Start Concert This */
 
 function concertThisAction() {
 
   inquirer.prompt([
-    { type: 'input', name: 'artistname', message: 'What artist are you looking for?',/*, filter: function(val) {
+    { type: 'input', name: 'artistname', message: 'What artist are you looking for?', filter: function(val) {
       return val.toLowerCase(); 
-    }*/
+    }
   }
 ])
 .then(function(answers) {
@@ -101,7 +130,6 @@ function concertThisAction() {
 })
 
 };
-
 
 
 
@@ -137,7 +165,7 @@ function saysHelper(command, term) {
         
           break;
       case "movie-this":
-          Movie(term);
+         console.log("move-this")
           break;
       case "do-what-it-says":
           dowhatitSays();
@@ -145,9 +173,7 @@ function saysHelper(command, term) {
   }
 }
 
-/* This has unused options, right now! */ 
-
-
+/* This has unused switch options right now. That is an on-purpose because I want to add to this feature. */ 
 
 
 
@@ -236,4 +262,5 @@ spotify.search({ type: 'track', query: 'ace+of+base+sign' + '&limit=1&'},  funct
   });
 }
 /* End Spotify */
+
 askFirstPrompt()
